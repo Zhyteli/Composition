@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Composition</string>
+    <string name="number_composition">Состав числа</string>
+    <string name="welcome_logo">Welcome logo</string>
+    <string name="tx_welcome">Правила игры: перед вами будет три фигуры, две снизу и одна сверху, в двух из них будут числа. Необходимо, чтобы суммы чисел из двух нижних фигур была равна числу в верхней фигуре, для этого нужно вставить недостающие число. Пример: в верхнем круге число 7, в одном из нижних знак вопроса, а в другом число 4. Значит на месте вопросительного знака должно быть число 3, потому что 3 + 4 = 7.</string>
+    <string name="bt_next">Понятно</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tx_test">Тестовый</string>
+    <string name="tx_level_middle">Средний</string>
+    <string name="tx_level_lite">Легкий</string>
+    <string name="tx_level_hard">Тяжелый</string>
+    <string name="tx_time">00:00</string>
+    <string name="question_mark">\?</string>
+    <string name="progress_answers">Привельных ответов %s (минимум %s)</string>
+    <string name="tx_game_over">Game Over</string>
+    <string name="number_of_responses">Необходимое количество ответов: %s</string>
+    <string name="tx_your_account">Ваш счет: %s</string>
+    <string name="required_percentage_of_correct_answers">Необходимый процент правильных ответов %s</string>
+    <string name="tx_percentage_of_correct_answers">Процент правильных ответов: %s</string>
+    <string name="tx_try_again">Попробовать снова</string>
 </resources>
