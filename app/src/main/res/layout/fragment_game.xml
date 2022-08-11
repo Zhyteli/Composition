@@ -132,11 +132,14 @@
         android:id="@+id/tv_answers_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/progress_answers"
         android:layout_margin="16dp"
-        app:layout_constraintVertical_chainStyle="spread"
+        android:layout_marginTop="20dp"
+        android:text="@string/progress_answers"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_left_number"
-        app:layout_constraintBottom_toTopOf="progress_bar"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
     <ProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -144,7 +147,7 @@
         android:layout_height="wrap_content"
         android:max="100"
         android:secondaryProgressTint="@android:color/background_dark"
-        app:layout_constraintBottom_toTopOf="@id/tv_option_2"
+        app:layout_constraintBottom_toTopOf="@id/tv_option_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_answers_progress"/>
