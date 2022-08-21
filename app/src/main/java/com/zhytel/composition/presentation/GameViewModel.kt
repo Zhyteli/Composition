@@ -2,9 +2,9 @@ package com.zhytel.composition.presentation
 
 import android.app.Application
 import android.os.CountDownTimer
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.zhytel.composition.R
 import com.zhytel.composition.data.GameRepositoryImpl
 import com.zhytel.composition.domain.entity.GameResult
@@ -14,14 +14,15 @@ import com.zhytel.composition.domain.entity.Question
 import com.zhytel.composition.domain.usecases.GenerateQuestionUseCase
 import com.zhytel.composition.domain.usecases.GetGameSettingsUseCase
 
-class GameViewModel(application: Application) : AndroidViewModel(application) {
+class GameViewModel(
+    private val level: Level,
+    private val application: Application
+    ) : ViewModel() {
 
     private lateinit var gameSettings: GameSettings
-    private lateinit var level: Level
 
     private var timer: CountDownTimer? = null
 
-    private val context = application
     private val repository = GameRepositoryImpl
 
     private val generateQuestionUseCase = GenerateQuestionUseCase(repository)
@@ -62,23 +63,28 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     private var countOfRightAnswers = 0
     private var countOfQuestions = 0
 
-    fun startGame(level: Level) {
-        getGameSettings(level)
-        startTimer()
-        generateQuestion()
+    init {
+        startGame()
     }
 
-    fun chooseAnswer(number: Int){
+    private fun startGame() {
+        getGameSettings()
+        startTimer()
+        generateQuestion()
+        updateProgress()
+    }
+
+    fun chooseAnswer(number: Int) {
         checkAnswer(number)
         updateProgress()
         generateQuestion()
     }
 
-    private fun updateProgress(){
+    private fun updateProgress() {
         val percent = calculatePercentOfRightAnswers()
         _percentOfRightAnswers.value = percent
         _progressAnswers.value = String.format(
-            context.resources.getString(R.string.progress_answers),
+            application.resources.getString(R.string.progress_answers),
             countOfRightAnswers,
             gameSettings.minCountOfRightAnswers
         )
@@ -86,7 +92,10 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         _enoughPercent.value = percent >= gameSettings.minPercentOfRightAnswers
     }
 
-    private fun calculatePercentOfRightAnswers():Int{
+    private fun calculatePercentOfRightAnswers(): Int {
+        if (countOfQuestions == 0) {
+            return 0
+        }
         return ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
     }
 
@@ -98,8 +107,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         countOfQuestions++
     }
 
-    private fun getGameSettings(level: Level){
-        this.level = level
+    private fun getGameSettings() {
         this.gameSettings = getGameSettingsUseCase(level)
         _minPresent.value = gameSettings.minPercentOfRightAnswers
     }
@@ -110,7 +118,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
             MILLIS_IN_SECONDS
         ) {
             override fun onTick(p0: Long) {
-               _formattedTime.value = formatTime(p0)
+                _formattedTime.value = formatTime(p0)
             }
 
             override fun onFinish() {
@@ -121,11 +129,11 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         timer?.start()
     }
 
-    private fun generateQuestion(){
-       _question.value = generateQuestionUseCase(gameSettings.maxSumValue)
+    private fun generateQuestion() {
+        _question.value = generateQuestionUseCase(gameSettings.maxSumValue)
     }
 
-    private fun formatTime(p0: Long):String{
+    private fun formatTime(p0: Long): String {
         val seconds = p0 / MILLIS_IN_SECONDS
         val minutes = seconds / SECONDS_IN_MINUTES
         val leftSeconds = seconds - (minutes * SECONDS_IN_MINUTES)
