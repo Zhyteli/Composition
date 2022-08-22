@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.zhytel.composition.R
 import com.zhytel.composition.databinding.FragmentWelcomeBinding
-import com.zhytel.composition.presentation.ChooseLevelFragment.Companion.NAME
 
 class WelcomeFragment : Fragment() {
 
@@ -31,14 +31,15 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun launchChooseLevelFragment(){
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, ChooseLevelFragment.newInstance())
-            .addToBackStack(NAME)
-            .commit()
+//        requireActivity().supportFragmentManager.beginTransaction()
+//            .replace(R.id.main_container, ChooseLevelFragment.newInstance())
+//            .addToBackStack(NAME)
+//            .commit()
+        findNavController().navigate(R.id.action_welcomeFragment_to_chooseLevelFragment)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding == null
+        _binding = null
     }
 }
