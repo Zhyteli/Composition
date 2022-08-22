@@ -11,8 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zhytel.composition.R
 import com.zhytel.composition.databinding.FragmentGameFinishedBinding
-import com.zhytel.composition.domain.entity.GameResult
-import com.zhytel.composition.presentation.GameFragment.Companion.NAME
 
 class GameFinishedFragment : Fragment() {
 
