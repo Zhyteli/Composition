@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.zhytel.composition.presentation.GameViewModel" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,9 +19,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/tx_time"
+        android:text="@{viewModel.formattedTime}"
         android:textColor="@color/purple_700"
         android:textSize="24sp"
+        tools:text="@string/tx_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,6 +34,7 @@
         android:layout_height="144dp"
         android:background="@drawable/circle_background"
         android:text="1"
+        app:numberAsText="@{viewModel.question.sum}"
         app:layout_constraintBottom_toTopOf="@id/tv_left_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +48,7 @@
         android:layout_height="wrap_content"
         android:background="@color/teal_700"
         android:text="7"
+        app:numberAsText="@{viewModel.question.visibleNumber}"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/iv_question"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -64,7 +75,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_green_light"
-        android:text="1"
+        android:text="@{viewModel.question.options.get(0).toString()}"
+        tools:text="1"
         app:layout_constraintBottom_toTopOf="@+id/tv_option_4"
         app:layout_constraintEnd_toStartOf="@id/tv_option_5"
         app:layout_constraintHorizontal_chainStyle="spread"
@@ -76,7 +88,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_orange_light"
-        android:text="2"
+        android:text="@{viewModel.question.options.get(1).toString()}"
+        tools:text="2"
         app:layout_constraintBottom_toTopOf="@+id/tv_option_4"
         app:layout_constraintEnd_toStartOf="@+id/tv_option_6"
         app:layout_constraintStart_toEndOf="@id/tv_option_4"/>
@@ -87,7 +100,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_purple"
-        android:text="3"
+        android:text="@{viewModel.question.options.get(2).toString()}"
+        tools:text="3"
         app:layout_constraintStart_toEndOf="@id/tv_option_5"
         app:layout_constraintBottom_toTopOf="@+id/tv_option_4"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -98,7 +112,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_light"
-        android:text="4"
+        android:text="@{viewModel.question.options.get(3).toString()}"
+        tools:text="4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_option_5"
         app:layout_constraintHorizontal_chainStyle="spread"
@@ -110,7 +125,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_red_light"
-        android:text="5"
+        android:text="@{viewModel.question.options.get(4).toString()}"
+        tools:text="5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_option_6"
         app:layout_constraintStart_toEndOf="@id/tv_option_4"
@@ -122,7 +138,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_bright"
-        android:text="6"
+        android:text="@{viewModel.question.options.get(5).toString()}"
+        tools:text="6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
@@ -134,7 +151,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_marginTop="20dp"
-        android:text="@string/progress_answers"
+        app:enoughCount="@{viewModel.enoughCount}"
+        android:text="@{viewModel.progressAnswers}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_left_number"
         app:layout_constraintStart_toStartOf="parent"
@@ -146,6 +164,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="100"
+        app:enoughPercent="@{viewModel.enoughPercent}"
+        android:progress="@{viewModel.percentOfRightAnswers}"
+        android:secondaryProgress="@{viewModel.minPresent}"
         android:secondaryProgressTint="@android:color/background_dark"
         app:layout_constraintBottom_toTopOf="@id/tv_option_1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -153,3 +174,4 @@
         app:layout_constraintTop_toBottomOf="@id/tv_answers_progress"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
