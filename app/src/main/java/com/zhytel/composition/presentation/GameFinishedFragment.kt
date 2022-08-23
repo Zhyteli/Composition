@@ -18,7 +18,7 @@ class GameFinishedFragment : Fragment() {
     private val binding: FragmentGameFinishedBinding
         get() = _binding ?: throw RuntimeException("FragmentGameFinishedBinding == null")
 
-    val args by navArgs<GameFinishedFragmentArgs>()
+    private val args by navArgs<GameFinishedFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,7 @@ class GameFinishedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
-        bindViews()
+        binding.gameResult = args.gameResult
     }
 
     private fun setupClickListeners() {
@@ -39,50 +39,10 @@ class GameFinishedFragment : Fragment() {
             retryGame()
         }
     }
-
-    private fun bindViews() {
-        with(binding) {
-            emojiResult.setImageResource(getSmileResId())
-            tvRequiredAnswers.text = String.format(
-                getString(R.string.number_of_responses),
-                args.gameResult.gameSettings.minCountOfRightAnswers
-            )
-            tvScoreAnswers.text = String.format(
-                getString(R.string.tx_your_account),
-                args.gameResult.countOfRightAnswers
-            )
-            tvRequiredPercentage.text = String.format(
-                getString(R.string.required_percentage_of_correct_answers),
-                args.gameResult.gameSettings.minPercentOfRightAnswers
-            )
-            tvStorePercentage.text = String.format(
-                getString(R.string.tx_percentage_of_correct_answers),
-                getPercentOfRightAnswers()
-            )
-        }
-    }
-
-    private fun getSmileResId(): Int {
-        return if (args.gameResult.winner) {
-            R.drawable.ic_qubodup_cubikopp_smilies_1
-        } else {
-            R.drawable.ic_qubodup_cubikopp_smilies_11
-        }
-    }
-
-    private fun getPercentOfRightAnswers() = with(args.gameResult) {
-        if (countOfQuestions == 0) {
-            0
-        } else {
-            ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
     private fun retryGame() {
 //        requireActivity().supportFragmentManager.popBackStack(
 //            NAME,
